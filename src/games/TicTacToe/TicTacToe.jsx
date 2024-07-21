@@ -21,7 +21,7 @@ function TicTacToe() {
         symbol: 'O',
         isTurn: false,
     });
-    const cellSize = 50;
+    const cellSize = 75;
     const boardSize = cellSize * Math.max(rows, columns);
 
     useEffect(() => {
