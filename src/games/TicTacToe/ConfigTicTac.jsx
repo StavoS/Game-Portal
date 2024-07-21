@@ -7,9 +7,14 @@ function ConfigTicTac({
     setFirstPlayer,
     secPlayer,
     setSecPlayer,
+    isStarted,
+    setIsStarted,
 }) {
     function handleFormSubmit(e) {
         e.preventDefault();
+        if (e.target.checkValidity()) {
+            setIsStarted((s) => true);
+        }
     }
     function changeRows(e) {
         setRows((r) => +e.target.value);

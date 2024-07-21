@@ -3,6 +3,7 @@ import './TicTacToe.css';
 import ConfigTicTac from './ConfigTicTac';
 
 function TicTacToe() {
+    const [isStarted, setIsStarted] = useState(false);
     const [rows, setRows] = useState(3);
     const [columns, setColumns] = useState(3);
     const [board, setBoard] = useState(
@@ -20,6 +21,8 @@ function TicTacToe() {
         symbol: 'O',
         isTurn: false,
     });
+    const cellSize = 50;
+    const boardSize = cellSize * Math.max(rows, columns);
 
     useEffect(() => {
         setBoard((b) =>
@@ -46,35 +49,45 @@ function TicTacToe() {
     }
     return (
         <div className="outer-container">
-            <ConfigTicTac
-                rows={rows}
-                setRows={setRows}
-                columns={columns}
-                setColumns={setColumns}
-                firstPlayer={firstPlayer}
-                setFirstPlayer={setFirstPlayer}
-                secPlayer={secPlayer}
-                setSecPlayer={setSecPlayer}
-            />
-            <div
-                className="d-grid text-center tictac-container"
-                style={{
-                    gridTemplateColumns: `repeat(${columns}, 1fr)`,
-                    gridTemplateRows: `repeat(${rows}, 1fr)`,
-                }}
-            >
-                {board.map((row, rowIndex) =>
-                    row.map((cell, colIndex) => (
-                        <button
-                            key={`${rowIndex}-${colIndex}`}
-                            className="cell"
-                            onClick={(e) => handleMove(e, rowIndex, colIndex)}
-                        >
-                            {cell}
-                        </button>
-                    ))
-                )}
-            </div>
+            {isStarted || (
+                <ConfigTicTac
+                    rows={rows}
+                    setRows={setRows}
+                    columns={columns}
+                    setColumns={setColumns}
+                    firstPlayer={firstPlayer}
+                    setFirstPlayer={setFirstPlayer}
+                    secPlayer={secPlayer}
+                    setSecPlayer={setSecPlayer}
+                    isStarted={isStarted}
+                    setIsStarted={setIsStarted}
+                />
+            )}
+            {isStarted && (
+                <div
+                    className="d-grid text-center tictac-container"
+                    style={{
+                        gridTemplateColumns: `repeat(${columns}, ${cellSize}px)`,
+                        gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
+                        width: { boardSize },
+                        height: { boardSize },
+                    }}
+                >
+                    {board.map((row, rowIndex) =>
+                        row.map((cell, colIndex) => (
+                            <button
+                                key={`${rowIndex}-${colIndex}`}
+                                className="cell"
+                                onClick={(e) =>
+                                    handleMove(e, rowIndex, colIndex)
+                                }
+                            >
+                                {cell}
+                            </button>
+                        ))
+                    )}
+                </div>
+            )}
         </div>
     );
 }

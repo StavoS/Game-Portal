@@ -8,9 +8,6 @@
 
 .tictac-container {
     display: grid;
-    width: 300px;
-    height: 300px;
-    border: solid;
 }
 .cell {
     border: 1px solid #333;
