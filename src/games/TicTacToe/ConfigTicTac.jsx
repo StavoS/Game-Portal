@@ -1,8 +1,6 @@
 function ConfigTicTac({
-    rows,
-    setRows,
-    columns,
-    setColumns,
+    boardSize,
+    setBoardSize,
     firstPlayer,
     setFirstPlayer,
     secPlayer,
@@ -14,13 +12,12 @@ function ConfigTicTac({
         e.preventDefault();
         if (e.target.checkValidity()) {
             setIsStarted((s) => true);
+            setFirstPlayer((f) => ({ ...f, isTurn: true, isWon: false }));
+            setSecPlayer((f) => ({ ...f, isTurn: false, isWon: false }));
         }
     }
-    function changeRows(e) {
-        setRows((r) => +e.target.value);
-    }
-    function changeCols(e) {
-        setColumns((c) => +e.target.value);
+    function changeBoardSize(e) {
+        setBoardSize((b) => +e.target.value);
     }
     function changeFirstPlayerName(e) {
         setFirstPlayer((f) => ({ ...f, name: e.target.value }));
@@ -55,24 +52,11 @@ function ConfigTicTac({
                 </div>
                 <div>
                     <label>
-                        Rows:
+                        Board Size:
                         <input
                             type="number"
-                            value={rows}
-                            onChange={(e) => changeRows(e)}
-                            min="3"
-                            max="10"
-                            required
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Columns:
-                        <input
-                            type="number"
-                            value={columns}
-                            onChange={(e) => changeCols(e)}
+                            value={boardSize}
+                            onChange={(e) => changeBoardSize(e)}
                             min="3"
                             max="10"
                             required
