@@ -6,6 +6,7 @@ class Piece {
         this._color = color;
         this._pieceName = '';
         this._pieceImg = '';
+        this._possibleMoves = [];
     }
     updatePieceImg() {
         this._pieceImg = `${this.#imgPath}/${this._color}${this._pieceName}.${
@@ -20,6 +21,9 @@ class Piece {
     }
     get pieceName() {
         return this._pieceName;
+    }
+    get pieceImg() {
+        return this._pieceImg;
     }
 }
 

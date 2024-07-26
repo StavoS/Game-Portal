@@ -6,6 +6,8 @@ class Rook extends Piece {
         this._pieceName = 'Rook';
         this.updatePieceImg();
     }
+
+    calcPossibleMoves(chessBoard) {}
 }
 
 export default Rook;

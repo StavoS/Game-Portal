@@ -6,6 +6,8 @@ class King extends Piece {
         this._pieceName = 'King';
         this.updatePieceImg();
     }
+
+    calcPossibleMoves(chessBoard) {}
 }
 
 export default King;

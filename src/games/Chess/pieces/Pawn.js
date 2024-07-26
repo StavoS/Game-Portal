@@ -6,6 +6,8 @@ class Pawn extends Piece {
         this._pieceName = 'Pawn';
         this.updatePieceImg();
     }
+
+    calcPossibleMoves(chessBoard) {}
 }
 
 export default Pawn;

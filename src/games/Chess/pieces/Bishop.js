@@ -6,6 +6,8 @@ class Bishop extends Piece {
         this._pieceName = 'Bishop';
         this.updatePieceImg();
     }
+
+    calcPossibleMoves(chessBoard) {}
 }
 
 export default Bishop;
