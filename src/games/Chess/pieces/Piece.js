@@ -7,12 +7,15 @@ class Piece {
         this._pieceName = '';
         this._pieceImg = '';
         this.isChosen = false;
-        this._possibleMoves = [];
     }
     updatePieceImg() {
         this._pieceImg = `${this.#imgPath}/${this._color}${this._pieceName}.${
             this.#imgExt
         }`;
+    }
+    updatePosition(newPosition) {
+        const { isEnemy, ...rest } = newPosition;
+        this.position = { ...rest };
     }
     get color() {
         return this._color;

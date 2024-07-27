@@ -14,8 +14,12 @@ class Pawn extends Piece {
         } else if (this._color === 'white') {
             return this.#calc(chessBoard, 'black');
         }
+    }
 
-        //this.#isFirstTurn = false;
+    updatePosition(newPosition) {
+        const { isEnemy, ...rest } = newPosition;
+        this.position = { ...rest };
+        this.#isFirstTurn = false;
     }
     #calc(chessBoard, enemyColor) {
         let possibleMoves = [];

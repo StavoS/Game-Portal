@@ -77,7 +77,7 @@ function Chess() {
                 }
             }
         }
-        //tempBoard[4][4] = new Pawn(4, 4, 'black');
+        //tempBoard[4][4] = new Pawn(4, 4, 'white');
         return tempBoard;
     }
 
@@ -121,7 +121,7 @@ function Chess() {
         tempBoard[currPiece.position.x][currPiece.position.y] = null;
 
         currPiece.isChosen = false;
-        currPiece.position = { ...chosenPosition };
+        currPiece.updatePosition(chosenPosition);
         tempBoard[chosenPosition.x][chosenPosition.y] = currPiece;
 
         console.log(tempBoard);
