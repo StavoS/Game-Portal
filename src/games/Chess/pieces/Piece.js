@@ -6,6 +6,7 @@ class Piece {
         this._color = color;
         this._pieceName = '';
         this._pieceImg = '';
+        this.isChosen = false;
         this._possibleMoves = [];
     }
     updatePieceImg() {

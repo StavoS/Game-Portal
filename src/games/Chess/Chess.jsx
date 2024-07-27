@@ -14,6 +14,7 @@ function Chess() {
             .fill()
             .map(() => Array(BOARD_SIZE).fill(null))
     );
+    const [currPossibleMoves, setCurrPossibleMoves] = useState([]);
 
     useEffect(() => {
         setChessBoard(initChessBoard());
@@ -75,12 +76,32 @@ function Chess() {
                 }
             }
         }
-        console.log(tempBoard);
+        //console.log(tempBoard);
         return tempBoard;
     }
-    function handleChosenPiece(row, col) {
-        console.log(`${row}-${col}`);
+
+    function handleChosenPiece(piece) {
+        if (!piece) return;
+
+        let tempBoard = [...chessBoard];
+        tempBoard = tempBoard.map((row) =>
+            row.map((cell) => {
+                if (cell && cell.isChosen) {
+                    cell.isChosen = false;
+                    return cell;
+                } else {
+                    return cell;
+                }
+            })
+        );
+        tempBoard[piece.position.x][piece.position.y].isChosen = true;
+        console.log(tempBoard);
+        setCurrPossibleMoves(piece.calcPossibleMoves(chessBoard));
+        setChessBoard(tempBoard);
     }
+
+    function handleMove() {}
+
     return (
         <div className="outer-container">
             <div className="chessboard">
@@ -93,15 +114,26 @@ function Chess() {
                                     ? 'light'
                                     : 'dark'
                             }`}
-                            onClick={() =>
-                                handleChosenPiece(rowIndex, colIndex)
+                            style={
+                                currPossibleMoves.find(
+                                    (move) =>
+                                        move.x === rowIndex &&
+                                        move.y === colIndex
+                                )
+                                    ? { backgroundColor: 'lightgreen' }
+                                    : {}
                             }
+                            onClick={() => handleChosenPiece(cell)}
                         >
-                            <img
-                                className="piece"
-                                src="/assets/whiteRook.svg"
-                                alt="Rook"
-                            />
+                            {cell ? (
+                                <img
+                                    className="piece"
+                                    src={cell.pieceImg}
+                                    alt=""
+                                />
+                            ) : (
+                                ''
+                            )}
                         </div>
                     ))
                 )}
@@ -111,3 +143,5 @@ function Chess() {
 }
 
 export default Chess;
+
+//להוסיף תנאי שאם הוא נמצא בתוך המערך עם כל האפשריות של התזוזות אז להבהיר בצבע מסוים
