@@ -15,6 +15,7 @@ function Chess() {
             .map(() => Array(BOARD_SIZE).fill(null))
     );
     const [currPossibleMoves, setCurrPossibleMoves] = useState([]);
+    const [currPiece, setCurrPiece] = useState();
 
     useEffect(() => {
         setChessBoard(initChessBoard());
@@ -76,7 +77,7 @@ function Chess() {
                 }
             }
         }
-        //console.log(tempBoard);
+        //tempBoard[4][4] = new Pawn(4, 4, 'black');
         return tempBoard;
     }
 
@@ -95,12 +96,40 @@ function Chess() {
             })
         );
         tempBoard[piece.position.x][piece.position.y].isChosen = true;
-        console.log(tempBoard);
+
         setCurrPossibleMoves(piece.calcPossibleMoves(chessBoard));
+        setCurrPiece(piece);
         setChessBoard(tempBoard);
     }
 
-    function handleMove() {}
+    function handleMove(newPosition, positionX, positionY) {
+        if (newPosition && newPosition.color === currPiece.color) {
+            //check if newPosition is a piece(class)
+
+            setCurrPiece(null);
+            handleChosenPiece(newPosition);
+            return;
+        }
+        let tempBoard = [...chessBoard];
+
+        const chosenPosition = currPossibleMoves.find(
+            (pos) => positionX === pos.x && positionY === pos.y
+        );
+        if (!chosenPosition) {
+            return;
+        }
+        tempBoard[currPiece.position.x][currPiece.position.y] = null;
+
+        currPiece.isChosen = false;
+        currPiece.position = { ...chosenPosition };
+        tempBoard[chosenPosition.x][chosenPosition.y] = currPiece;
+
+        console.log(tempBoard);
+
+        setCurrPossibleMoves([]);
+        setCurrPiece(null);
+        setChessBoard(tempBoard);
+    }
 
     return (
         <div className="outer-container">
@@ -123,7 +152,11 @@ function Chess() {
                                     ? { backgroundColor: 'lightgreen' }
                                     : {}
                             }
-                            onClick={() => handleChosenPiece(cell)}
+                            onClick={() =>
+                                currPiece
+                                    ? handleMove(cell, rowIndex, colIndex)
+                                    : handleChosenPiece(cell)
+                            }
                         >
                             {cell ? (
                                 <img
@@ -143,5 +176,3 @@ function Chess() {
 }
 
 export default Chess;
-
-//להוסיף תנאי שאם הוא נמצא בתוך המערך עם כל האפשריות של התזוזות אז להבהיר בצבע מסוים

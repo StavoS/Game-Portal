@@ -10,25 +10,34 @@ class Pawn extends Piece {
 
     calcPossibleMoves(chessBoard) {
         if (this._color === 'black') {
-            return this.#calc(chessBoard, 1, 2);
+            return this.#calc(chessBoard, 'white');
         } else if (this._color === 'white') {
-            return this.#calc(chessBoard, -1, -2);
+            return this.#calc(chessBoard, 'black');
         }
 
         //this.#isFirstTurn = false;
     }
-    #calc(chessBoard, oneMove, twoMove) {
+    #calc(chessBoard, enemyColor) {
         let possibleMoves = [];
+        const moveSpace = this.#isFirstTurn ? 2 : 1;
+        const direction = this._color === 'black' ? 1 : -1;
 
-        if (this.#isFirstTurn) {
-            possibleMoves = [
-                { x: this._position.x + oneMove, y: this._position.y },
-                { x: this._position.x + twoMove, y: this._position.y },
-            ];
-        } else {
-            possibleMoves = [
-                { x: this._position.x + oneMove, y: this._position.y },
-            ];
+        for (let i = 1; i <= moveSpace; i++) {
+            const newX = this.position.x + i * direction;
+            const newY = this.position.y;
+
+            if (newX < 0 || newX >= chessBoard.length) break;
+
+            const targetCell = chessBoard[newX][newY];
+
+            if (targetCell && targetCell.color === this._color) break;
+
+            if (targetCell && targetCell.color === enemyColor) {
+                possibleMoves.push({ x: newX, y: newY, isEnemy: true });
+                break;
+            }
+
+            possibleMoves.push({ x: newX, y: newY });
         }
 
         return possibleMoves;
