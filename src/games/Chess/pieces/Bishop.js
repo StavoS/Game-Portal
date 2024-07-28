@@ -5,9 +5,14 @@ class Bishop extends Piece {
         super(x, y, color);
         this._pieceName = 'Bishop';
         this._updatePieceImg();
+        this._directions = [
+            { dx: 1, dy: 1 },
+            { dx: 1, dy: -1 },
+            { dx: -1, dy: 1 },
+            { dx: -1, dy: -1 },
+        ];
+        this._keepsMoving = true;
     }
-
-    calcPossibleMoves(chessBoard) {}
 }
 
 export default Bishop;
