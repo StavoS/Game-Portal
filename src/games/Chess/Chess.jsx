@@ -77,7 +77,7 @@ function Chess() {
                 }
             }
         }
-        //tempBoard[4][4] = new Pawn(4, 4, 'white');
+        //tempBoard[4][4] = new Knight(4, 4, 'white');
         return tempBoard;
     }
 
@@ -96,6 +96,7 @@ function Chess() {
             })
         );
         tempBoard[piece.position.x][piece.position.y].isChosen = true;
+        console.log(piece.calcPossibleMoves(chessBoard));
 
         setCurrPossibleMoves(piece.calcPossibleMoves(chessBoard));
         setCurrPiece(piece);

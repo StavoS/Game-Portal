@@ -5,15 +5,7 @@ class Pawn extends Piece {
     constructor(x, y, color) {
         super(x, y, color);
         this._pieceName = 'Pawn';
-        this.updatePieceImg();
-    }
-
-    calcPossibleMoves(chessBoard) {
-        if (this._color === 'black') {
-            return this.#calc(chessBoard, 'white');
-        } else if (this._color === 'white') {
-            return this.#calc(chessBoard, 'black');
-        }
+        this._updatePieceImg();
     }
 
     updatePosition(newPosition) {
@@ -21,7 +13,8 @@ class Pawn extends Piece {
         this.position = { ...rest };
         this.#isFirstTurn = false;
     }
-    #calc(chessBoard, enemyColor) {
+
+    _calc(chessBoard, enemyColor) {
         let possibleMoves = [];
         const moveSpace = this.#isFirstTurn ? 2 : 1;
         const direction = this._color === 'black' ? 1 : -1;

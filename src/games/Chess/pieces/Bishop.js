@@ -4,7 +4,7 @@ class Bishop extends Piece {
     constructor(x, y, color) {
         super(x, y, color);
         this._pieceName = 'Bishop';
-        this.updatePieceImg();
+        this._updatePieceImg();
     }
 
     calcPossibleMoves(chessBoard) {}
