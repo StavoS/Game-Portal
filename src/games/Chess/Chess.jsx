@@ -77,7 +77,7 @@ function Chess() {
                 }
             }
         }
-        tempBoard[4][4] = new Knight(4, 4, 'white');
+        tempBoard[4][4] = new Queen(4, 4, 'white');
         tempBoard[3][3] = new Knight(3, 3, 'black');
         return tempBoard;
     }
