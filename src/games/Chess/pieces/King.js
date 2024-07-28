@@ -5,9 +5,18 @@ class King extends Piece {
         super(x, y, color);
         this._pieceName = 'King';
         this._updatePieceImg();
+        this._directions = [
+            { dx: 1, dy: 0 },
+            { dx: -1, dy: 0 },
+            { dx: 0, dy: 1 },
+            { dx: 0, dy: -1 },
+            { dx: 1, dy: 1 },
+            { dx: 1, dy: -1 },
+            { dx: -1, dy: 1 },
+            { dx: -1, dy: -1 },
+        ];
+        this._keepsMoving = false;
     }
-
-    calcPossibleMoves(chessBoard) {}
 }
 
 export default King;
