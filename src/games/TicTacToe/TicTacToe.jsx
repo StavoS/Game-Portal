@@ -22,7 +22,7 @@ function TicTacToe() {
         isTurn: false,
         isWon: false,
     });
-    //const [gameOver, setGameOver] = useState(false);
+    const [isTie, setIsTie] = useState(false);
     const cellSize = 75;
 
     useEffect(() => {
@@ -47,11 +47,18 @@ function TicTacToe() {
             })
         );
 
+        if (checkTie(newBoard)) {
+            setIsTie(true);
+            resetGame();
+            return;
+        }
+
         if (checkWon(newBoard, currShape)) {
             declareWinner(currShape);
             resetGame();
             return;
         }
+
         setBoard(newBoard);
         setNextTurn(currShape);
     }
@@ -73,6 +80,10 @@ function TicTacToe() {
             setSecPlayer((s) => ({ ...s, isTurn: false }));
             setFirstPlayer((f) => ({ ...f, isTurn: true }));
         }
+    }
+
+    function checkTie(newBoard) {
+        return newBoard.flat().every((cell) => cell);
     }
 
     function checkWon(newBoard, symbol) {
@@ -117,7 +128,6 @@ function TicTacToe() {
 
     function resetGame() {
         setIsStarted(false);
-        setBoardSize(3);
         setBoard(
             Array(3)
                 .fill()
@@ -135,8 +145,8 @@ function TicTacToe() {
                     setFirstPlayer={setFirstPlayer}
                     secPlayer={secPlayer}
                     setSecPlayer={setSecPlayer}
-                    isStarted={isStarted}
                     setIsStarted={setIsStarted}
+                    setIsTie={setIsTie}
                 />
             )}
             {isStarted && (
@@ -170,6 +180,7 @@ function TicTacToe() {
                     : secPlayer.isWon
                     ? `${secPlayer.name} HAS WON!!`
                     : ''}
+                {isTie ? 'TIEEEEE!!!!!!' : ''}
             </p>
         </div>
     );

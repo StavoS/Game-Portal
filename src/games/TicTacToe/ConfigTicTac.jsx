@@ -5,13 +5,14 @@ function ConfigTicTac({
     setFirstPlayer,
     secPlayer,
     setSecPlayer,
-    isStarted,
     setIsStarted,
+    setIsTie,
 }) {
     function handleFormSubmit(e) {
         e.preventDefault();
         if (e.target.checkValidity()) {
             setIsStarted((s) => true);
+            setIsTie(false);
             setFirstPlayer((f) => ({ ...f, isTurn: true, isWon: false }));
             setSecPlayer((f) => ({ ...f, isTurn: false, isWon: false }));
         }
