@@ -48,7 +48,7 @@ class Piece {
                     if (cell.color === this._color) break;
 
                     if (cell.color === enemyColor) {
-                        possibleMoves.push({ x, y });
+                        possibleMoves.push({ x, y, enemy: cell.pieceName });
                         break;
                     }
                 }

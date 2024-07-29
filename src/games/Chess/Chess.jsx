@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Chess.css';
+import ConfigChess from './ConfigChess';
 import Pawn from './pieces/Pawn';
 import Queen from './pieces/Queen';
 import King from './pieces/King';
@@ -16,6 +17,19 @@ function Chess() {
     );
     const [currPossibleMoves, setCurrPossibleMoves] = useState([]);
     const [currPiece, setCurrPiece] = useState();
+    const [firstPlayer, setFirstPlayer] = useState({
+        name: 'Trump',
+        color: 'white',
+        isTurn: false,
+        pieces: [],
+    });
+    const [secPlayer, setSecPlayer] = useState({
+        name: 'Biden',
+        color: 'black',
+        isTurn: false,
+        pieces: [],
+    });
+    const [isStarted, setIsStarted] = useState(false);
 
     useEffect(() => {
         setChessBoard(initChessBoard());
@@ -77,13 +91,33 @@ function Chess() {
                 }
             }
         }
-        tempBoard[4][4] = new King(4, 4, 'white');
-        tempBoard[3][3] = new Knight(3, 3, 'black');
+
+        setFirstPlayer((f) => ({
+            ...f,
+            pieces: tempBoard
+                .flat()
+                .map((piece) =>
+                    piece && piece.position.x < 2 ? piece.pieceName : null
+                )
+                .filter((piece) => piece),
+        }));
+        setSecPlayer((s) => ({
+            ...s,
+            pieces: tempBoard
+                .flat()
+                .map((piece) =>
+                    piece && piece.position.x < 2 ? piece.pieceName : null
+                )
+                .filter((piece) => piece),
+        }));
+
         return tempBoard;
     }
 
     function handleChosenPiece(piece) {
         if (!piece) return;
+        if (firstPlayer.isTurn && piece.color === 'black') return;
+        if (secPlayer.isTurn && piece.color === 'white') return;
 
         let tempBoard = [...chessBoard];
         tempBoard = tempBoard.map((row) =>
@@ -120,6 +154,8 @@ function Chess() {
         if (!chosenPosition) {
             return;
         }
+        //need to check if its enemy, if it is remove it from the pieces array of the player
+        //then run a function that checks wether the king was the one who got eaten
         tempBoard[currPiece.position.x][currPiece.position.y] = null;
 
         currPiece.isChosen = false;
@@ -130,49 +166,72 @@ function Chess() {
 
         setCurrPossibleMoves([]);
         setCurrPiece(null);
+        switchTurns();
         setChessBoard(tempBoard);
+    }
+
+    function switchTurns() {
+        if (firstPlayer.isTurn) {
+            setFirstPlayer((f) => ({ ...f, isTurn: false }));
+            setSecPlayer((s) => ({ ...s, isTurn: true }));
+        } else if (secPlayer.isTurn) {
+            setSecPlayer((s) => ({ ...s, isTurn: false }));
+            setFirstPlayer((f) => ({ ...f, isTurn: true }));
+        }
     }
 
     return (
         <div className="outer-container">
-            <div className="chessboard">
-                {chessBoard.map((row, rowIndex) =>
-                    row.map((cell, colIndex) => (
-                        <div
-                            key={`${rowIndex}-${colIndex}`}
-                            className={`cell ${
-                                (rowIndex + colIndex) % 2 === 0
-                                    ? 'light'
-                                    : 'dark'
-                            }`}
-                            style={
-                                currPossibleMoves.find(
-                                    (move) =>
-                                        move.x === rowIndex &&
-                                        move.y === colIndex
-                                )
-                                    ? { backgroundColor: 'lightgreen' }
-                                    : {}
-                            }
-                            onClick={() =>
-                                currPiece
-                                    ? handleMove(cell, rowIndex, colIndex)
-                                    : handleChosenPiece(cell)
-                            }
-                        >
-                            {cell ? (
-                                <img
-                                    className="piece"
-                                    src={cell.pieceImg}
-                                    alt=""
-                                />
-                            ) : (
-                                ''
-                            )}
-                        </div>
-                    ))
-                )}
-            </div>
+            {isStarted || (
+                <ConfigChess
+                    firstPlayer={firstPlayer}
+                    setFirstPlayer={setFirstPlayer}
+                    secPlayer={secPlayer}
+                    setSecPlayer={setSecPlayer}
+                    isStarted={isStarted}
+                    setIsStarted={setIsStarted}
+                />
+            )}
+            {isStarted && (
+                <div className="chessboard">
+                    {chessBoard.map((row, rowIndex) =>
+                        row.map((cell, colIndex) => (
+                            <div
+                                key={`${rowIndex}-${colIndex}`}
+                                className={`cell ${
+                                    (rowIndex + colIndex) % 2 === 0
+                                        ? 'light'
+                                        : 'dark'
+                                }`}
+                                style={
+                                    currPossibleMoves.find(
+                                        (move) =>
+                                            move.x === rowIndex &&
+                                            move.y === colIndex
+                                    )
+                                        ? { backgroundColor: 'lightgreen' }
+                                        : {}
+                                }
+                                onClick={() =>
+                                    currPiece
+                                        ? handleMove(cell, rowIndex, colIndex)
+                                        : handleChosenPiece(cell)
+                                }
+                            >
+                                {cell ? (
+                                    <img
+                                        className="piece"
+                                        src={cell.pieceImg}
+                                        alt=""
+                                    />
+                                ) : (
+                                    ''
+                                )}
+                            </div>
+                        ))
+                    )}
+                </div>
+            )}
         </div>
     );
 }

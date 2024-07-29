@@ -30,7 +30,11 @@ class Pawn extends Piece {
             if (targetCell && targetCell.color === this._color) break;
 
             if (targetCell && targetCell.color === enemyColor) {
-                possibleMoves.push({ x: newX, y: newY, isEnemy: true });
+                possibleMoves.push({
+                    x: newX,
+                    y: newY,
+                    enemy: targetCell.pieceName,
+                });
                 break;
             }
 
