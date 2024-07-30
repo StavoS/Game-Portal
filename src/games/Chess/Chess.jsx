@@ -154,6 +154,9 @@ function Chess() {
         if (!chosenPosition) {
             return;
         }
+        if (chosenPosition.enemy) {
+            removePiecePlayer(chosenPosition.enemy);
+        }
         //need to check if its enemy, if it is remove it from the pieces array of the player
         //then run a function that checks wether the king was the one who got eaten
         tempBoard[currPiece.position.x][currPiece.position.y] = null;
@@ -179,6 +182,24 @@ function Chess() {
             setFirstPlayer((f) => ({ ...f, isTurn: true }));
         }
     }
+    function removePiecePlayer(pieceName) {
+        if (firstPlayer.isTurn) {
+            const index = firstPlayer.pieces.indexOf(pieceName);
+            const filterPieces = firstPlayer.pieces.filter(
+                (_, id) => id !== index
+            );
+            setFirstPlayer((f) => ({ ...f, filterPieces }));
+            console.log(filterPieces);
+        } else if (secPlayer.isTurn) {
+            const index = secPlayer.pieces.indexOf(pieceName);
+            const filterPieces = secPlayer.pieces.filter(
+                (_, id) => id !== index
+            );
+            setSecPlayer((s) => ({ ...s, filterPieces }));
+            console.log(filterPieces);
+        }
+    }
+    function declareWinner() {}
 
     return (
         <div className="outer-container">

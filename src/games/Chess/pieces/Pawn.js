@@ -6,6 +6,12 @@ class Pawn extends Piece {
         super(x, y, color);
         this._pieceName = 'Pawn';
         this._updatePieceImg();
+        this._directions = [
+            { dx: 1, dy: 0 },
+            { dx: 2, dy: 0 },
+            { dx: 1, dy: 1 },
+            { dx: 1, dy: -1 },
+        ];
     }
 
     updatePosition(newPosition) {
@@ -16,29 +22,35 @@ class Pawn extends Piece {
 
     _calc(chessBoard, enemyColor) {
         let possibleMoves = [];
-        const moveSpace = this.#isFirstTurn ? 2 : 1;
-        const direction = this._color === 'black' ? 1 : -1;
+        const { x: startX, y: startY } = this.position;
+        const boardSize = chessBoard.length;
+        const diretion = this._color === 'black' ? 1 : -1;
 
-        for (let i = 1; i <= moveSpace; i++) {
-            const newX = this.position.x + i * direction;
-            const newY = this.position.y;
+        for (const { dx, dy } of this._directions) {
+            let x = startX;
+            let y = startY;
 
-            if (newX < 0 || newX >= chessBoard.length) break;
+            x += dx * diretion;
+            y += dy;
 
-            const targetCell = chessBoard[newX][newY];
+            if (x >= boardSize || x < 0 || y >= boardSize || y < 0) break;
 
-            if (targetCell && targetCell.color === this._color) break;
+            const cell = chessBoard[x][y];
 
-            if (targetCell && targetCell.color === enemyColor) {
-                possibleMoves.push({
-                    x: newX,
-                    y: newY,
-                    enemy: targetCell.pieceName,
-                });
-                break;
+            if (dx === 2 && this.#isFirstTurn && !cell) {
+                console.log(this.#isFirstTurn);
+                possibleMoves.push({ x, y });
+                continue;
+            } else if (dx === 2) {
+                continue;
             }
-
-            possibleMoves.push({ x: newX, y: newY });
+            if (cell && cell.color === enemyColor && dy !== 0) {
+                possibleMoves.push({ x, y, enemy: cell.pieceName });
+                continue;
+            }
+            if (!cell && dy === 0) {
+                possibleMoves.push({ x, y });
+            }
         }
 
         return possibleMoves;
