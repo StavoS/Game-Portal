@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './NavBar.css'; // Make sure to create this CSS file
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     const [isGamesOpen, setIsGamesOpen] = useState(false);
@@ -30,9 +31,9 @@ const NavBar = () => {
                             isGamesOpen ? 'show' : ''
                         }`}
                     >
-                        <a href="#chess">Chess</a>
-                        <a href="#tictactoe">Tic Tac Toe</a>
-                        <a href="#binary-search">Binary Search</a>
+                        <Link to="/chess">Chess</Link>
+                        <Link to="/tictactoe">TicTacToe</Link>
+                        <Link to="/binary-search">Binary Search</Link>
                     </div>
                 </div>
             </div>

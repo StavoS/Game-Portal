@@ -28,6 +28,7 @@ function ConfigTicTac({
     }
     return (
         <div>
+            <h2>Enter Player Names</h2>
             <form onSubmit={handleFormSubmit} className="mb-4">
                 <div>
                     <label>
