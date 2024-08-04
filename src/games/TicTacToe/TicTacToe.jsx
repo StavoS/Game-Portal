@@ -136,7 +136,7 @@ function TicTacToe() {
     }
 
     return (
-        <div className="outer-container">
+        <div className="outer-container-tictac">
             {isStarted || (
                 <ConfigTicTac
                     boardSize={boardSize}
@@ -163,7 +163,7 @@ function TicTacToe() {
                         row.map((cell, colIndex) => (
                             <button
                                 key={`${rowIndex}-${colIndex}`}
-                                className="cell"
+                                className="cell-tictac"
                                 onClick={(e) =>
                                     handleMove(e, rowIndex, colIndex)
                                 }
@@ -174,14 +174,16 @@ function TicTacToe() {
                     )}
                 </div>
             )}
-            <p>
-                {firstPlayer.isWon
-                    ? `${firstPlayer.name} HAS WON!`
-                    : secPlayer.isWon
-                    ? `${secPlayer.name} HAS WON!!`
-                    : ''}
-                {isTie ? 'TIEEEEE!!!!!!' : ''}
-            </p>
+            {(firstPlayer.isWon || secPlayer.isWon || isTie) && (
+                <p className="won-msg">
+                    {firstPlayer.isWon
+                        ? `${firstPlayer.name} HAS WON!`
+                        : secPlayer.isWon
+                        ? `${secPlayer.name} HAS WON!!`
+                        : ''}
+                    {isTie ? 'TIEEEEE!!!!!!' : null}
+                </p>
+            )}
         </div>
     );
 }

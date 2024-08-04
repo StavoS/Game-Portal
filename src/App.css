@@ -1,0 +1,20 @@
+body {
+    background: url('../public/assets/background/background-image.webp')
+        no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+    padding: 20px;
+}

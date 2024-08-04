@@ -1,25 +1,58 @@
-.outer-container {
+/* src/TicTacToe.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+.outer-container-tictac {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    color: #fff;
 }
 
 .tictac-container {
     display: grid;
-    border: solid;
+    gap: 5px;
+    border: 2px solid #ffdd57;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
 }
-.cell {
-    border: 1px solid #333;
+
+.cell-tictac {
+    width: 75px;
+    height: 75px;
+    border: 2px solid #ffdd57;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2em;
     cursor: pointer;
-    background-color: #f0f0f0;
+    background-color: #333;
+    color: #ffdd57;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-.cell:hover {
-    background-color: #ddd;
+.cell-tictac:hover {
+    background-color: #444;
+    transform: scale(1.1);
+}
+
+.cell-tictac:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 221, 87, 0.7);
+}
+
+.won-msg {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-top: 20px;
+    color: #f30303;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    border: 2px solid #ffdd57;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }

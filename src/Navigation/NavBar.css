@@ -25,6 +25,7 @@
 }
 
 .dropbtn {
+    text-decoration: none;
     background-color: #333;
     color: #fff;
     border: none;

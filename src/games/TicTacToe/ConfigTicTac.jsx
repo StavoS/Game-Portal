@@ -1,3 +1,6 @@
+import React from 'react';
+import '../ConfigGameForm.css';
+
 function ConfigTicTac({
     boardSize,
     setBoardSize,
@@ -17,55 +20,64 @@ function ConfigTicTac({
             setSecPlayer((f) => ({ ...f, isTurn: false, isWon: false }));
         }
     }
+
     function changeBoardSize(e) {
         setBoardSize((b) => +e.target.value);
     }
+
     function changeFirstPlayerName(e) {
         setFirstPlayer((f) => ({ ...f, name: e.target.value }));
     }
+
     function changeSecPlayerName(e) {
         setSecPlayer((s) => ({ ...s, name: e.target.value }));
     }
+
     return (
-        <div>
+        <div className="player-form">
             <h2>Enter Player Names</h2>
             <form onSubmit={handleFormSubmit} className="mb-4">
-                <div>
+                <div className="form-group">
                     <label>
                         Player 1:
                         <input
                             type="text"
                             value={firstPlayer.name}
-                            onChange={(e) => changeFirstPlayerName(e)}
+                            onChange={changeFirstPlayerName}
                             required
+                            className="form-control"
                         />
                     </label>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>
                         Player 2:
                         <input
                             type="text"
                             value={secPlayer.name}
-                            onChange={(e) => changeSecPlayerName(e)}
+                            onChange={changeSecPlayerName}
                             required
+                            className="form-control"
                         />
                     </label>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>
                         Board Size:
                         <input
                             type="number"
                             value={boardSize}
-                            onChange={(e) => changeBoardSize(e)}
+                            onChange={changeBoardSize}
                             min="3"
                             max="10"
                             required
+                            className="form-control"
                         />
                     </label>
                 </div>
-                <button type="submit">Start Game</button>
+                <button type="submit" className="button-start">
+                    Start Game
+                </button>
             </form>
         </div>
     );

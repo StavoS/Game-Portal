@@ -1,3 +1,6 @@
+import React from 'react';
+import '../ConfigGameForm.css';
+
 function ConfigChess({
     firstPlayer,
     setFirstPlayer,
@@ -41,7 +44,9 @@ function ConfigChess({
                         required
                     />
                 </div>
-                <button type="submit">Start</button>
+                <button type="submit" className="button-start">
+                    Start
+                </button>
             </form>
         </div>
     );

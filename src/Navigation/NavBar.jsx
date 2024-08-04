@@ -21,7 +21,7 @@ const NavBar = () => {
                         className={`dropbtn ${isGamesOpen ? 'active' : ''}`}
                         onClick={toggleGamesDropdown}
                     >
-                        Games
+                        <Link to="/games">Games</Link>
                         <span
                             className={`arrow ${isGamesOpen ? 'rotate' : ''}`}
                         >

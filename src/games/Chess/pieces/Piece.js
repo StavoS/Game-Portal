@@ -1,5 +1,5 @@
 class Piece {
-    #imgPath = '/assets';
+    #imgPath = '/assets/imagePieces';
     #imgExt = 'svg';
     constructor(newX, newY, color) {
         this.position = { x: newX, y: newY };
