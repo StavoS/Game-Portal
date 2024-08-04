@@ -1,32 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
-import TicTacToe from './games/TicTacToe/TicTacToe';
-import Chess from './games/Chess/Chess';
 import NavBar from './Navigation/NavBar';
-import Login from './Login/Login';
-import Register from './Register/Register';
 import { AuthProvider } from './auth/AuthProvider';
-import Home from './Home/Home';
-import GamesIndex from './games/GamesIndex';
+import RouterPaths from './RouterPaths/RouterPaths';
 
 function App() {
     return (
         <>
             <AuthProvider>
                 <NavBar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/games" element={<Outlet />}>
-                        <Route index element={<GamesIndex />} />
-                        <Route path="chess" element={<Chess />} />
-                        <Route path="tictactoe" element={<TicTacToe />} />
-                        <Route path="binary-search" element={<TicTacToe />} />
-                    </Route>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                </Routes>
+                <RouterPaths />
             </AuthProvider>
         </>
     );
