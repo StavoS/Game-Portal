@@ -25,7 +25,7 @@ function ConfigChess({
             <h2>Enter Player Names</h2>
             <form onSubmit={handleStart}>
                 <div className="form-group">
-                    <label htmlFor="player1">Player 1 Name:</label>
+                    <label htmlFor="player1">White Player Name:</label>
                     <input
                         type="text"
                         id="player1"
@@ -35,7 +35,7 @@ function ConfigChess({
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="player2">Player 2 Name:</label>
+                    <label htmlFor="player2">Black Player Name:</label>
                     <input
                         type="text"
                         id="player2"

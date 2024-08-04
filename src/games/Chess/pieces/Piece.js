@@ -7,7 +7,7 @@ class Piece {
         this._pieceName = '';
         this._pieceImg = '';
         this._directions = [];
-        this._keepsMoving = false; //CHECK WHETHER A PIECE CAN MOVE MORE THAN ONE MOVE EACH DIRECTION(WILL BE OVERRIDEN)
+        this._keepsMoving = false; //CHECKS WHETHER A PIECE CAN MOVE MORE THAN ONE MOVE EACH DIRECTION(WILL BE OVERRIDEN)
         this.isChosen = false;
     }
     _updatePieceImg() {
@@ -16,7 +16,7 @@ class Piece {
         }`;
     }
     updatePosition(newPosition) {
-        const { isEnemy, ...rest } = newPosition;
+        const { enemy, ...rest } = newPosition;
         this.position = { ...rest };
     }
 

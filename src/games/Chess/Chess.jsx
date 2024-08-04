@@ -29,6 +29,7 @@ function Chess() {
         isTurn: false,
         pieces: [],
     });
+    const [winner, setWinner] = useState(null);
     const [isStarted, setIsStarted] = useState(false);
 
     useEffect(() => {
@@ -154,9 +155,6 @@ function Chess() {
         if (!chosenPosition) {
             return;
         }
-        if (chosenPosition.enemy) {
-            removePiecePlayer(chosenPosition.enemy);
-        }
         tempBoard[currPiece.position.x][currPiece.position.y] = null;
 
         currPiece.isChosen = false;
@@ -167,8 +165,16 @@ function Chess() {
 
         setCurrPossibleMoves([]);
         setCurrPiece(null);
-        switchTurns();
         setChessBoard(tempBoard);
+        if (chosenPosition.enemy) {
+            removePiecePlayer(chosenPosition.enemy);
+            if (chosenPosition.enemy === 'King') {
+                declareWinner();
+                resetGame();
+                return;
+            }
+        }
+        switchTurns();
     }
 
     function switchTurns() {
@@ -197,23 +203,41 @@ function Chess() {
             console.log(filterPieces);
         }
     }
-    function declareWinner() {}
+
+    function declareWinner() {
+        setWinner(getCurrTurnName());
+    }
+
+    function getCurrTurnName() {
+        if (firstPlayer.isTurn) {
+            return firstPlayer.name;
+        } else if (secPlayer.isTurn) {
+            return secPlayer.name;
+        }
+    }
+
+    function resetGame() {
+        setChessBoard(initChessBoard());
+        setFirstPlayer((f) => ({ isTurn: false, pieces: [], ...f }));
+        setSecPlayer((s) => ({ isTurn: false, pieces: [], ...s }));
+        setIsStarted(false);
+    }
 
     return (
         <>
-            <div className="config">
-                {isStarted || (
-                    <ConfigChess
-                        firstPlayer={firstPlayer}
-                        setFirstPlayer={setFirstPlayer}
-                        secPlayer={secPlayer}
-                        setSecPlayer={setSecPlayer}
-                        isStarted={isStarted}
-                        setIsStarted={setIsStarted}
-                    />
-                )}
-            </div>
             <div className="outer-container">
+                <div className="config">
+                    {isStarted || (
+                        <ConfigChess
+                            firstPlayer={firstPlayer}
+                            setFirstPlayer={setFirstPlayer}
+                            secPlayer={secPlayer}
+                            setSecPlayer={setSecPlayer}
+                            isStarted={isStarted}
+                            setIsStarted={setIsStarted}
+                        />
+                    )}
+                </div>
                 {isStarted && (
                     <div className="chessboard">
                         {chessBoard.map((row, rowIndex) =>
@@ -258,6 +282,9 @@ function Chess() {
                         )}
                     </div>
                 )}
+                {winner && !isStarted ? (
+                    <p className="won-msg">{winner} HAS WON!!!!</p>
+                ) : null}
             </div>
         </>
     );
