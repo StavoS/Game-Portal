@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import './NavBar.css'; // Make sure to create this CSS file
+import './NavBar.css';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider';
 
 const NavBar = () => {
     const [isGamesOpen, setIsGamesOpen] = useState(false);
+    const { user, logout } = useAuth();
 
     const toggleGamesDropdown = () => {
         setIsGamesOpen(!isGamesOpen);
@@ -12,8 +14,8 @@ const NavBar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-left">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
                 <div className="dropdown">
                     <button
                         className={`dropbtn ${isGamesOpen ? 'active' : ''}`}
@@ -31,16 +33,30 @@ const NavBar = () => {
                             isGamesOpen ? 'show' : ''
                         }`}
                     >
-                        <Link to="/chess">Chess</Link>
-                        <Link to="/tictactoe">TicTacToe</Link>
-                        <Link to="/binary-search">Binary Search</Link>
+                        <Link to="/games/chess">Chess</Link>
+                        <Link to="/games/tictactoe">TicTacToe</Link>
+                        <Link to="/games/binary-search">Binary Search</Link>
                     </div>
                 </div>
             </div>
-            <div className="navbar-right">
-                <a href="#signin">Sign In</a>
-                <a href="#register">Register</a>
-            </div>
+            {
+                <div className="navbar-right">
+                    {!user ? (
+                        <>
+                            <Link to="/login">Login</Link>
+                            <Link to="/register">Register</Link>
+                        </>
+                    ) : (
+                        <>
+                            <span>Welcome {user.username}</span>
+                            <br />
+                            <button className="logout" onClick={logout}>
+                                Logout
+                            </button>
+                        </>
+                    )}
+                </div>
+            }
         </nav>
     );
 };

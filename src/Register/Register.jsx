@@ -1,17 +1,22 @@
-// src/Register.js
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import { useAuth } from '../auth/AuthProvider';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const { register } = useAuth();
 
-    const handleSubmit = (e) => {};
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        try {
+            register(username, email, password, 'admin');
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
     return (
         <div className="container">

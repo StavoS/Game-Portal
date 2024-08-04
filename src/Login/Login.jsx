@@ -1,16 +1,21 @@
-// src/Login.js
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import { useAuth } from '../auth/AuthProvider';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const { login } = useAuth();
 
-    const handleSubmit = (e) => {};
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        try {
+            login(email, password);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
     return (
         <div className="container">
