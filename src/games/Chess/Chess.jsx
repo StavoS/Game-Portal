@@ -223,6 +223,7 @@ function Chess() {
         setIsStarted(false);
     }
 
+    function callStockFishAPI() {}
     return (
         <>
             <div className="outer-container">
