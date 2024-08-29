@@ -178,13 +178,8 @@ function Chess() {
     }
 
     function switchTurns() {
-        if (firstPlayer.isTurn) {
-            setFirstPlayer((f) => ({ ...f, isTurn: false }));
-            setSecPlayer((s) => ({ ...s, isTurn: true }));
-        } else if (secPlayer.isTurn) {
-            setSecPlayer((s) => ({ ...s, isTurn: false }));
-            setFirstPlayer((f) => ({ ...f, isTurn: true }));
-        }
+        setFirstPlayer((f) => ({ ...f, isTurn: !f.isTurn }));
+        setSecPlayer((s) => ({ ...s, isTurn: !s.isTurn }));
     }
     function removePiecePlayer(pieceName) {
         if (firstPlayer.isTurn) {
