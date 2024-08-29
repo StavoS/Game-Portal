@@ -93,26 +93,21 @@ function Chess() {
             }
         }
 
-        setFirstPlayer((f) => ({
-            ...f,
-            pieces: tempBoard
-                .flat()
-                .map((piece) =>
-                    piece && piece.position.x < 2 ? piece.pieceName : null
-                )
-                .filter((piece) => piece),
-        }));
-        setSecPlayer((s) => ({
-            ...s,
-            pieces: tempBoard
-                .flat()
-                .map((piece) =>
-                    piece && piece.position.x < 2 ? piece.pieceName : null
-                )
-                .filter((piece) => piece),
-        }));
+        initPlayerPieces(setFirstPlayer, tempBoard);
+        initPlayerPieces(setSecPlayer, tempBoard);
 
         return tempBoard;
+    }
+
+    function initPlayerPieces(setPlayer, board) {
+        setPlayer((player) => ({
+            ...player,
+            pieces: getAllPieces(board),
+        }));
+    }
+
+    function getAllPieces(board) {
+        return board.flat().filter((piece) => piece && piece.position.x < 2);
     }
 
     function handleChosenPiece(piece) {
@@ -180,6 +175,7 @@ function Chess() {
     function switchTurns() {
         setFirstPlayer((f) => ({ ...f, isTurn: !f.isTurn }));
         setSecPlayer((s) => ({ ...s, isTurn: !s.isTurn }));
+        console.log(firstPlayer.pieces);
     }
     function removePiecePlayer(pieceName) {
         if (firstPlayer.isTurn) {
