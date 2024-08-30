@@ -198,14 +198,8 @@ function Chess() {
     function declareWinner() {
         setWinner(getCurrTurnName());
     }
-
-    function getCurrTurnName() {
-        if (firstPlayer.isTurn) {
-            return firstPlayer.name;
-        } else if (secPlayer.isTurn) {
-            return secPlayer.name;
-        }
-    }
+    const getCurrTurnName = () =>
+        firstPlayer.isTurn ? firstPlayer.name : secPlayer.name;
 
     function resetGame() {
         setChessBoard(initChessBoard());
